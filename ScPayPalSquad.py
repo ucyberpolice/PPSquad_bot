@@ -139,7 +139,7 @@ def message_react(message):
                                            'Нажмите отправить, если все верно.\n',reply_markup=markup_send)
 
 @bot.callback_query_handler(func=lambda call:True)
-def forquestion(call):
+def callhandler(call):
     if call.data == 'agree':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='⚡Вы ознакомились с правилами!⚡\nПерейдем к вашей заявке, вам нужно ответить на несколько вопросов.',

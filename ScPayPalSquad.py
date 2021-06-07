@@ -7,6 +7,7 @@ import time
 TOKEN = '1877566254:AAFxQmIGck18VDl2QTsz67QymTkIm1UCDQs'
 MAIN_URL = f'https://api.telegram.org/bot{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
+
 idStatus = [
     'false', #0
     'true'   #1

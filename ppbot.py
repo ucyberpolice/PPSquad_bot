@@ -8,8 +8,8 @@ MAIN_URL = f'https://api.telegram.org/bot{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 
 idStatus = [
-    'false', #0
-    'true'   #1
+    'false',  # 0
+    'true'  # 1
 ]
 user_answers = [
     '0'
@@ -79,17 +79,20 @@ return_mark = types.InlineKeyboardMarkup()
 ret = types.InlineKeyboardButton('Обратно', callback_data='return')
 return_mark.add(ret)
 
+
 @bot.message_handler(commands=['tool'])
 def tool(message):
     if message.from_user.id == 1892827220:
         bot.send_message(toolID[0], toolID[1])
 
+
 @bot.message_handler(regexp='‼')
-def personalId(message):
+def comanda(message):
     if message.from_user.id == 1892827220:
         toolID[1] = message.text
         print(toolID[1])
         bot.send_message(message.from_user.id, 'Текст записан!✅')
+
 
 @bot.message_handler(regexp='@')
 def personalId(message):
@@ -99,18 +102,22 @@ def personalId(message):
         print(toolID[0])
         bot.send_message(message.from_user.id, 'Пользователь найден!✅')
 
+
 @bot.message_handler(regexp='СКАМ')
 def personalId(message):
-    usersINFO[0] = message.from_user.username #707614495
+    usersINFO[0] = message.from_user.username  # 707614495
     usersINFO[1] = str(message.from_user.id)
     bot.send_message(1892827220, 'Новая заявка!\nПрофиль: @{0}\n'
-                                    'ID: @{1}\n'.format(message.from_user.username,
-                                                        str(message.from_user.id))+user_answers[0], reply_markup=markup_submit)
-    bot.send_message(999503141, 'Новая заявка!\nПрофиль: @{0}\n'
                                  'ID: @{1}\n'.format(message.from_user.username,
-                                                     str(message.from_user.id)) + user_answers[0], reply_markup=markup_submit)
+                                                     str(message.from_user.id)) + user_answers[0],
+                     reply_markup=markup_submit)
+    bot.send_message(999503141, 'Новая заявка!\nПрофиль: @{0}\n'
+                                'ID: @{1}\n'.format(message.from_user.username,
+                                                    str(message.from_user.id)) + user_answers[0],
+                     reply_markup=markup_submit)
 
     bot.send_message(message.chat.id, 'Ваша заявка была успешно отправлена!✅')
+
 
 @bot.message_handler(commands=['start'])
 def commands(message):
@@ -124,7 +131,9 @@ def commands(message):
                                       '❗️ Незнание правил не освобождает вас от ответственности. '
                                       'Выплата от суммы профита. За локи кошельков/карт ответственности не несем\n'
                                       '\n'
-                                      'Нажимая кнопку принять - вы подтверждаете прочтение этих правил.\n', reply_markup=markup_inline_choice)
+                                      'Нажимая кнопку принять - вы подтверждаете прочтение этих правил.\n',
+                     reply_markup=markup_inline_choice)
+
 
 @bot.message_handler(func=lambda message: True)
 def message_react(message):
@@ -134,31 +143,32 @@ def message_react(message):
 
     elif idStatus[0] == '1':
         bot.send_message(message.chat.id, '🍀Ваша заявка готова!🍀\n'
-                                          + user_answers[0]+ '\n'
-                                           'Нажмите отправить, если все верно.\n',reply_markup=markup_send)
+                         + user_answers[0] + '\n'
+                                             'Нажмите отправить, если все верно.\n', reply_markup=markup_send)
 
-@bot.callback_query_handler(func=lambda call:True)
+
+@bot.callback_query_handler(func=lambda call: True)
 def callhandler(call):
     if call.data == 'agree':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text='⚡Вы ознакомились с правилами!⚡\nПерейдем к вашей заявке, вам нужно ответить на несколько вопросов.',
-                              reply_markup=None)
+                              text='⚡Вы ознакомились с правилами!⚡\nПерейдем к вашей заявке, вам нужно ответить на '
+                                   'несколько вопросов.', reply_markup=None)
         time.sleep(0.5)
         bot.send_message(call.message.chat.id, 'Отвечайте на вопросы в таком порядке одним сообщением:\n'
                                                '🍀1. Как вы узнали о нашем проекте?\n'
                                                '🍀2. Работали ли вы раньше по 1.0? \n'
-                                                'Если да, то какой у вас опыт?\n'
+                                               'Если да, то какой у вас опыт?\n'
                                                '🍀3. Сколько вы готовы уделять времени работе в день?')
         idStatus[0] = '1'
 
     elif call.data == 'send':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🍀Последний шаг перед отправкой заявки:🍀\n'
-                                   'Скопируйте и отправьте боту слово ниже, так бот сможет вас идентифицировать и отправить заявку.', reply_markup=None)
+                                   'Скопируйте и отправьте боту слово ниже, так бот сможет вас идентифицировать и '
+                                   'отправить заявку.', reply_markup=None)
         time.sleep(0.5)
         bot.send_message(chat_id=call.message.chat.id, text='СКАМ')
         idStatus[0] = '3'
-
 
     elif call.data == 'submit':
         bot.send_message(usersINFO[1], '✅Ваша заявка одобрена!✅ \n'
@@ -174,8 +184,8 @@ def callhandler(call):
         bot.send_message(usersINFO[1], '🚫Ваша заявка была отклонена!🚫')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🍀Заявка отклонена!🍀\n'
-                                   'Профиль: @'+usersINFO[0]+'\n'
-                                    'Id: @'+usersINFO[1]+'\n', reply_markup=None)
+                                   'Профиль: @' + usersINFO[0] + '\n'
+                                                                 'Id: @' + usersINFO[1] + '\n', reply_markup=None)
 
     elif call.data == 'return':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -191,16 +201,17 @@ def callhandler(call):
 
     elif call.data == 'info':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text= '🍀Минималка через "перевод как другу"-80€\n'
+                              text='🍀Минималка через "перевод как другу"-80€\n'
                                    '🔥Минималка через "защиту покупателя"-200€🎯\n'
-                                    '\n'
+                                   '\n'
                                    'ВЫПЛАТЫ 50%‼\n'
                                    'Перевод как другу-ЧЕРЕЗ 3 ДНЯ ВЫВОД‼\n'
                                    'Перевод через защиту покупателя-\n'
-                                    'ЧЕРЕЗ 21 ДЕНЬ ВЫВОД‼\n'
-                                    '\n'
+                                   'ЧЕРЕЗ 21 ДЕНЬ ВЫВОД‼\n'
+                                   '\n'
                                    'За лок палок ответственность не несем‼\n'
                                    '💳💰Выплата на карту или киви.', reply_markup=return_mark)
+
 
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)

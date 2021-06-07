@@ -1,7 +1,7 @@
 import telebot
-from telebot import types
 import re
 import time
+from telebot import types
 
 TOKEN = '1877566254:AAFxQmIGck18VDl2QTsz67QymTkIm1UCDQs'
 MAIN_URL = f'https://api.telegram.org/bot{TOKEN}'

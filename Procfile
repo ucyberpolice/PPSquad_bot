@@ -1,1 +1,1 @@
-worker: python ScPayPalSquad.py
+worker: python ppbot.py

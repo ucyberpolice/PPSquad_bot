@@ -1,16 +1,15 @@
-# -*- coding: utf-8 -*-
 import telebot
+from telebot import types
 import re
 import time
-from telebot import types
 
 TOKEN = '1877566254:AAFxQmIGck18VDl2QTsz67QymTkIm1UCDQs'
 MAIN_URL = f'https://api.telegram.org/bot{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 
 idStatus = [
-    'false',  # 0
-    'true'  # 1
+    'false',
+    'true'
 ]
 user_answers = [
     '0'
@@ -27,8 +26,9 @@ usersID = [
     'id'
 ]
 soCreatersID = [
-    'first',
+    'first'
 ]
+
 Acces = False
 
 markup_inline_choice = types.InlineKeyboardMarkup()
@@ -88,7 +88,7 @@ def tool(message):
 
 
 @bot.message_handler(regexp='‼')
-def comanda(message):
+def personal(message):
     if message.from_user.id == 1892827220:
         toolID[1] = message.text
         print(toolID[1])
@@ -96,7 +96,7 @@ def comanda(message):
 
 
 @bot.message_handler(regexp='@')
-def personalId(message):
+def persona(message):
     if message.from_user.id == 1892827220:
         usersID[0] = message.text
         toolID[0] = re.findall("\d+", usersID[0])[0]
@@ -105,14 +105,14 @@ def personalId(message):
 
 
 @bot.message_handler(regexp='СКАМ')
-def personalId(message):
-    usersINFO[0] = message.from_user.username  # 707614495
+def person(message):
+    usersINFO[0] = message.from_user.username
     usersINFO[1] = str(message.from_user.id)
-    bot.send_message(1892827220, 'Новая заявка!\nПрофиль: @{0}\n'
+    bot.send_message(1892827220, '🔔Новая заявка!🔔\nПрофиль: @{0}\n'
                                  'ID: @{1}\n'.format(message.from_user.username,
                                                      str(message.from_user.id)) + user_answers[0],
                      reply_markup=markup_submit)
-    bot.send_message(999503141, 'Новая заявка!\nПрофиль: @{0}\n'
+    bot.send_message(999503141, '🔔Новая заявка!🔔\nПрофиль: @{0}\n'
                                 'ID: @{1}\n'.format(message.from_user.username,
                                                     str(message.from_user.id)) + user_answers[0],
                      reply_markup=markup_submit)
@@ -149,27 +149,30 @@ def message_react(message):
 
 
 @bot.callback_query_handler(func=lambda call: True)
-def callhandler(call):
+def handler(call):
     if call.data == 'agree':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text='⚡Вы ознакомились с правилами!⚡\nПерейдем к вашей заявке, вам нужно ответить на '
-                                   'несколько вопросов.', reply_markup=None)
+                              text='⚡Вы ознакомились с правилами!⚡\nПерейдем к вашей заявке,'
+                                   ' вам нужно ответить на несколько вопросов.',
+                              reply_markup=None)
         time.sleep(0.5)
         bot.send_message(call.message.chat.id, 'Отвечайте на вопросы в таком порядке одним сообщением:\n'
                                                '🍀1. Как вы узнали о нашем проекте?\n'
                                                '🍀2. Работали ли вы раньше по 1.0? \n'
-                                               'Если да, то какой у вас опыт?\n'
-                                               '🍀3. Сколько вы готовы уделять времени работе в день?')
+                                               '🍀3. По каким странам Европы раньше работали?\n'
+                                               '🍀4. Сколько вы готовы уделять времени работе в день?')
         idStatus[0] = '1'
 
     elif call.data == 'send':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🍀Последний шаг перед отправкой заявки:🍀\n'
-                                   'Скопируйте и отправьте боту слово ниже, так бот сможет вас идентифицировать и '
-                                   'отправить заявку.', reply_markup=None)
+                                   'Скопируйте и отправьте боту слово ниже,'
+                                   ' так бот сможет вас идентифицировать и отправить заявку.',
+                              reply_markup=None)
         time.sleep(0.5)
         bot.send_message(chat_id=call.message.chat.id, text='СКАМ')
         idStatus[0] = '3'
+
 
     elif call.data == 'submit':
         bot.send_message(usersINFO[1], '✅Ваша заявка одобрена!✅ \n'
@@ -185,8 +188,8 @@ def callhandler(call):
         bot.send_message(usersINFO[1], '🚫Ваша заявка была отклонена!🚫')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🍀Заявка отклонена!🍀\n'
-                                   'Профиль: @' + usersINFO[0] + '\n'
-                                                                 'Id: @' + usersINFO[1] + '\n', reply_markup=None)
+                                   'Профиль: @' + str(usersINFO[0]) + '\n'
+                                                                      'Id: @' + usersINFO[1] + '\n', reply_markup=None)
 
     elif call.data == 'return':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -205,10 +208,10 @@ def callhandler(call):
                               text='🍀Минималка через "перевод как другу"-80€\n'
                                    '🔥Минималка через "защиту покупателя"-200€🎯\n'
                                    '\n'
-                                   'ВЫПЛАТЫ 50%‼\n'
-                                   'Перевод как другу-ЧЕРЕЗ 3 ДНЯ ВЫВОД‼\n'
+                                   'ВЫПЛАТЫ 40%‼️\n'
+                                   'Перевод как другу-ЧЕРЕЗ 3 ДНЯ ВЫВОД‼️\n'
                                    'Перевод через защиту покупателя-\n'
-                                   'ЧЕРЕЗ 21 ДЕНЬ ВЫВОД‼\n'
+                                   'ЧЕРЕЗ 21 ДЕНЬ ВЫВОД‼️\n'
                                    '\n'
                                    'За лок палок ответственность не несем‼\n'
                                    '💳💰Выплата на карту или киви.', reply_markup=return_mark)

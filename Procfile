@@ -1,1 +1,1 @@
-worker: python ppbot.py
+worker: python paypal.py

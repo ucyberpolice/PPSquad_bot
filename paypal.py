@@ -1,10 +1,8 @@
 import telebot
 from telebot import types
-import re
 import time
 
 TOKEN = '1877566254:AAFxQmIGck18VDl2QTsz67QymTkIm1UCDQs'
-MAIN_URL = f'https://api.telegram.org/bot{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 
 idStatus = [
@@ -28,6 +26,12 @@ usersID = [
 soCreatersID = [
     'first'
 ]
+
+bannedId = ['1']
+clearBannedId = ['1']
+TwoclearBannedId = ['1']
+ThreeclearBannedId = ['1']
+FourlearBannedId = ['1']
 
 Acces = False
 
@@ -80,61 +84,63 @@ return_mark = types.InlineKeyboardMarkup()
 ret = types.InlineKeyboardButton('Обратно', callback_data='return')
 return_mark.add(ret)
 
-
-@bot.message_handler(commands=['tool'])
-def tool(message):
-    if message.from_user.id == 1892827220:
-        bot.send_message(toolID[0], toolID[1])
-
-
-@bot.message_handler(regexp='‼')
-def personal(message):
-    if message.from_user.id == 1892827220:
-        toolID[1] = message.text
-        print(toolID[1])
-        bot.send_message(message.from_user.id, 'Текст записан!✅')
-
-
 @bot.message_handler(regexp='@')
 def persona(message):
     if message.from_user.id == 1892827220:
-        usersID[0] = message.text
-        toolID[0] = re.findall("\d+", usersID[0])[0]
-        print(toolID[0])
-        bot.send_message(message.from_user.id, 'Пользователь найден!✅')
+        bannedId[0] = message.text
+        clearBannedId[0] = bannedId[0].replace('@','')
+        print(bannedId[0])
+        bot.send_message(message.from_user.id, 'Пользователь забанен!✅')
 
+@bot.message_handler(regexp='#')
+def persona(message):
+    if message.from_user.id == 1892827220:
+        bannedId[0] = message.text
+        TwoclearBannedId[0] = bannedId[0].replace('#','')
+        bot.send_message(message.from_user.id, 'Пользователь забанен!✅')
 
-@bot.message_handler(regexp='СКАМ')
-def person(message):
-    usersINFO[0] = message.from_user.username
-    usersINFO[1] = str(message.from_user.id)
-    bot.send_message(1892827220, '🔔Новая заявка!🔔\nПрофиль: @{0}\n'
-                                 'ID: @{1}\n'.format(message.from_user.username,
-                                                     str(message.from_user.id)) + user_answers[0],
-                     reply_markup=markup_submit)
-    bot.send_message(999503141, '🔔Новая заявка!🔔\nПрофиль: @{0}\n'
-                                'ID: @{1}\n'.format(message.from_user.username,
-                                                    str(message.from_user.id)) + user_answers[0],
-                     reply_markup=markup_submit)
+@bot.message_handler(regexp='%')
+def persona(message):
+    if message.from_user.id == 1892827220:
+        bannedId[0] = message.text
+        FourlearBannedId[0] = bannedId[0].replace('%','')
+        bot.send_message(message.from_user.id, 'Пользователь забанен!✅')
 
-    bot.send_message(message.chat.id, 'Ваша заявка была успешно отправлена!✅')
+@bot.message_handler(regexp='!')
+def persona(message):
+    if message.from_user.id == 1892827220:
+        bannedId[0] = message.text
+        ThreeclearBannedId[0] = bannedId[0].replace('!','')
+        bot.send_message(message.from_user.id, 'Пользователь забанен!✅')
 
 
 @bot.message_handler(commands=['start'])
 def commands(message):
-    idStatus[0] = '0'
-    bot.send_message(message.chat.id, 'Правила проекта ⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡: \n'
-                                      '\n'
-                                      '• Запрещена реклама, спам, флуд, распространение 🔞 фото, видео, гиф, контента.\n'
-                                      '• Запрещено попрошайничество\n'
-                                      '• Запрещены услуги вбивов, обналов и прочих услуг.\n'
-                                      '\n'
-                                      '❗️ Незнание правил не освобождает вас от ответственности. '
-                                      'Выплата от суммы профита. За локи кошельков/карт ответственности не несем\n'
-                                      '\n'
-                                      'Нажимая кнопку принять - вы подтверждаете прочтение этих правил.\n',
-                     reply_markup=markup_inline_choice)
+    if message.from_user.id == int(clearBannedId[0]):
+        bot.send_message(message.chat.id, text='Ты заблокирован!')
+    elif message.from_user.id == int(TwoclearBannedId[0]):
+        bot.send_message(message.chat.id, text='Ты заблокирован!')
+    elif message.from_user.id == int(ThreeclearBannedId[0]):
+        bot.send_message(message.chat.id, text='Ты заблокирован!')
+    elif message.from_user.id == int(FourlearBannedId[0]):
+        bot.send_message(message.chat.id, text='Ты заблокирован!')
 
+    else:
+        idStatus[0] = '0'
+        bot.send_message(message.chat.id, 'Правила проекта ⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡: \n'
+                                          '\n'
+                                          '• Запрещена реклама, спам, флуд, распространение 🔞 фото, видео, гиф, контента.\n'
+                                          '• Запрещено попрошайничество!\n'
+                                          '• Запрещены услуги вбивов, обналов и прочих услуг.\n'
+                                          '• Админы могут дать бан воркеру без объяснения причины!\n'
+                                          '• После профита категорически запрещается выдавать себя мамонту во избежание диспутов, если это произошло админы могут штрафовать и не выплачивать профиты!'
+                                          '\n'
+                                          '\n'
+                                          '❗️ Незнание правил не освобождает вас от ответственности. '
+                                          'Выплата от суммы профита. За локи кошельков/карт ответственности не несем\n'
+                                          '\n'
+                                          'Нажимая кнопку принять - вы подтверждаете прочтение этих правил.\n',
+                         reply_markup=markup_inline_choice)
 
 @bot.message_handler(func=lambda message: True)
 def message_react(message):
@@ -146,6 +152,13 @@ def message_react(message):
         bot.send_message(message.chat.id, '🍀Ваша заявка готова!🍀\n'
                          + user_answers[0] + '\n'
                                              'Нажмите отправить, если все верно.\n', reply_markup=markup_send)
+
+        bot.send_message(1892827220, '🔔Новая заявка!🔔\nПрофиль: @{0}\n'
+                                     'ID: @{1}\n'.format(message.from_user.username,
+                                                         str(message.from_user.id)) + user_answers[0],
+                         reply_markup=markup_submit)
+        usersINFO[0] = message.from_user.username
+        usersINFO[1] = message.from_user.id
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -165,12 +178,8 @@ def handler(call):
 
     elif call.data == 'send':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text='🍀Последний шаг перед отправкой заявки:🍀\n'
-                                   'Скопируйте и отправьте боту слово ниже,'
-                                   ' так бот сможет вас идентифицировать и отправить заявку.',
+                              text='Ваша заявка была успешно отправлена!✅',
                               reply_markup=None)
-        time.sleep(0.5)
-        bot.send_message(chat_id=call.message.chat.id, text='СКАМ')
         idStatus[0] = '3'
 
 
@@ -180,16 +189,16 @@ def handler(call):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🍀Заявка одобрена!🍀\n'
                                    'Профиль: @' + usersINFO[0] + '\n'
-                                                                 'Id: @' + usersINFO[1] + '\n', reply_markup=None)
+                                                                 'Id: @' + str(usersINFO[1]) + '\n', reply_markup=None)
 
         bot.send_message(usersINFO[1], 'Выберите действие:', reply_markup=markup_main)
 
     elif call.data == 'reject':
         bot.send_message(usersINFO[1], '🚫Ваша заявка была отклонена!🚫')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text='🍀Заявка отклонена!🍀\n'
+                              text='🚫Заявка отклонена!🚫\n'
                                    'Профиль: @' + str(usersINFO[0]) + '\n'
-                                                                      'Id: @' + usersINFO[1] + '\n', reply_markup=None)
+                                                                      'Id: @' + str(usersINFO[1]) + '\n', reply_markup=None)
 
     elif call.data == 'return':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -208,14 +217,13 @@ def handler(call):
                               text='🍀Минималка через "перевод как другу"-80€\n'
                                    '🔥Минималка через "защиту покупателя"-200€🎯\n'
                                    '\n'
-                                   'ВЫПЛАТЫ 40%‼️\n'
                                    'Перевод как другу-ЧЕРЕЗ 3 ДНЯ ВЫВОД‼️\n'
                                    'Перевод через защиту покупателя-\n'
                                    'ЧЕРЕЗ 21 ДЕНЬ ВЫВОД‼️\n'
+                                   'Штраф за диспуты‼️\n'
                                    '\n'
                                    'За лок палок ответственность не несем‼\n'
                                    '💳💰Выплата на карту или киви.', reply_markup=return_mark)
-
 
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)

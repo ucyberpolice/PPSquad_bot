@@ -31,17 +31,17 @@ markup_chat.add(chat)
 markup_chat.add(channel)
 
 markup_main = types.InlineKeyboardMarkup()
+info = types.InlineKeyboardButton('👁Инфо', callback_data='info')
 manuals = types.InlineKeyboardButton('🎓Мануалы', callback_data='manuals')
 playground = types.InlineKeyboardButton('🛠Площадки', callback_data='playground')
+markup_main.add(info)
 markup_main.add(manuals)
 markup_main.add(playground)
 
 manual_markup = types.InlineKeyboardMarkup()
-first = types.InlineKeyboardButton('📚Работа с PayPal | Vinted', url='https://telegra.ph/Status-proekta---VORK-06-05')
-second = types.InlineKeyboardButton('📚Какой товар выставлять?', url='https://telegra.ph/Kakoj-tovar-vystavlyat-06-05')
+first = types.InlineKeyboardButton('📚Работа с PayPal | Vinted', url='https://telegra.ph/%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%B2%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%A5-%F0%9D%90%92%F0%9D%90%AA%F0%9D%90%AE%F0%9D%90%9A%F0%9D%90%9D--Podrobnyj-manual-10-06-16')
 third = types.InlineKeyboardButton('Обратно', callback_data='return')
 manual_markup.add(first)
-manual_markup.add(second)
 manual_markup.add(third)
 
 return_markup = types.InlineKeyboardMarkup()
@@ -53,6 +53,10 @@ return_markup.add(vinted)
 return_markup.add(quoka)
 return_markup.add(finn)
 return_markup.add(return1)
+
+return_mark = types.InlineKeyboardMarkup()
+ret = types.InlineKeyboardButton('Обратно', callback_data='return')
+return_mark.add(ret)
 
 proekt = """
 ♠️Добро пожаловать в♠️
@@ -109,6 +113,17 @@ adm = """_Ваша заявка была отправлена администр
 на рассмотрение❕_"""
 ban = """_Ты был заблокирован❕_"""
 admban = """_Пользователь был заблокирован❕_"""
+
+information = """
+⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡
+-  _новый вид 1.0
+    никакого фишинга
+    официальный сайт❕_
+    
+-  _ориг счета PayPal
+    профиты от 150€
+    много площадок❕_
+"""
 
 userStatus = [0]
 userRequest = ['0']
@@ -219,10 +234,13 @@ def caller(call):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🛠Площадки для работы:🛠\n', reply_markup=return_markup)
 
+    if call.data == 'info':
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                              text=information, parse_mode="Markdown", reply_markup=return_mark)
+
     elif call.data == 'return':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='♠️Выберите действие:♠️', reply_markup=markup_main)
-
 
     elif call.data == 'reject':
         bot.send_message(1892827220, 'ТС отрек: @'+clearID[0])

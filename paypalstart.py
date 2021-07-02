@@ -25,7 +25,7 @@ markup_choice.add(submit, reject)
 markup_choice.add(ban)
 
 markup_chat = types.InlineKeyboardMarkup()
-chat = types.InlineKeyboardButton('⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡ | Чат', url='https://t.me/joinchat/WOy2oyuK9fZmODZi')
+chat = types.InlineKeyboardButton('⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡ | Чат', url='https://t.me/joinchat/FYzWS_A5u3IyNzQy')
 channel = types.InlineKeyboardButton('💸Канал выплат💸', url='https://t.me/joinchat/ZJWZj5mCEog4NmQy')
 markup_chat.add(chat)
 markup_chat.add(channel)
@@ -39,7 +39,7 @@ markup_main.add(manuals)
 markup_main.add(playground)
 
 manual_markup = types.InlineKeyboardMarkup()
-first = types.InlineKeyboardButton('📚Работа с PayPal | Vinted', url='https://telegra.ph/%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%B2%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%A5-%F0%9D%90%92%F0%9D%90%AA%F0%9D%90%AE%F0%9D%90%9A%F0%9D%90%9D--Podrobnyj-manual-10-06-16')
+first = types.InlineKeyboardButton('📚Работа с PayPal | Vinted', url='https://telegra.ph/%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%B2%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%A5-%F0%9D%90%84%F0%9D%90%A6%F0%9D%90%A9%F0%9D%90%A2%F0%9D%90%AB%F0%9D%90%9E--Manual-10-07-01')
 third = types.InlineKeyboardButton('Обратно', callback_data='return')
 manual_markup.add(first)
 manual_markup.add(third)
@@ -138,7 +138,7 @@ def persona(message):
         chatID[0] = message.text
         clearID[0] = (chatID[0]).replace('@','')
         print(clearID[0])
-        bot.send_message(1892827220, '♠️Админ: @{0}♠️\n'
+        bot.send_message(1892827220, '💠Админ: @{0}💠\n'
                          ' Профиль: @'.format(message.from_user.username)+str(clearID[0]),
                          reply_markup=markup_choice)
 
@@ -146,7 +146,7 @@ def persona(message):
         chatID[0] = message.text
         clearID[0] = (chatID[0]).replace('@','')
         print(clearID[0])
-        bot.send_message(999503141, '♠️Админ: @{0}♠️\n'
+        bot.send_message(999503141, '💠Админ: @{0}💠\n'
                          ' Профиль: @'.format(message.from_user.username)+str(clearID[0]),
                          reply_markup=markup_choice)
 

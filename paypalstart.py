@@ -25,7 +25,7 @@ markup_choice.add(submit, reject)
 markup_choice.add(ban)
 
 markup_chat = types.InlineKeyboardMarkup()
-chat = types.InlineKeyboardButton('⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡ | Чат', url='https://t.me/joinchat/FYzWS_A5u3IyNzQy')
+chat = types.InlineKeyboardButton('⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡ | Чат', url='https://t.me/joinchat/iXE6jISxRFg2OGQy')
 channel = types.InlineKeyboardButton('💸Канал выплат💸', url='https://t.me/joinchat/ZJWZj5mCEog4NmQy')
 markup_chat.add(chat)
 markup_chat.add(channel)

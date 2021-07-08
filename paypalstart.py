@@ -40,8 +40,10 @@ markup_main.add(playground)
 
 manual_markup = types.InlineKeyboardMarkup()
 first = types.InlineKeyboardButton('📚Работа с PayPal | Vinted', url='https://telegra.ph/%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%B2%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%A5-%F0%9D%90%84%F0%9D%90%A6%F0%9D%90%A9%F0%9D%90%A2%F0%9D%90%AB%F0%9D%90%9E--Manual-10-07-01')
+second = types.InlineKeyboardButton('📚Трек-код DNL', url='https://telegra.ph/%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%B2%F0%9D%90%8F%F0%9D%90%9A%F0%9D%90%A5-%F0%9D%90%84%F0%9D%90%A6%F0%9D%90%A9%F0%9D%90%A2%F0%9D%90%AB%F0%9D%90%9ETrek-kod-DNL-07-03')
 third = types.InlineKeyboardButton('Обратно', callback_data='return')
 manual_markup.add(first)
+manual_markup.add(second)
 manual_markup.add(third)
 
 return_markup = types.InlineKeyboardMarkup()
@@ -60,7 +62,7 @@ return_mark.add(ret)
 
 proekt = """
 ♠️Добро пожаловать в♠️
-      ⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐒𝐪𝐮𝐚𝐝⚡
+      ⚡𝐏𝐚𝐲𝐏𝐚𝐥 𝐄𝐦𝐩𝐢𝐫𝐞⚡
   Товарка 1.0 без риска
     и номеров WhatsUp
     """
@@ -134,11 +136,11 @@ bannedID = ['1']
 
 @bot.message_handler(regexp='@')
 def persona(message):
-    if message.from_user.id == 1892827220:
+    if message.from_user.id == 1695283624:
         chatID[0] = message.text
         clearID[0] = (chatID[0]).replace('@','')
         print(clearID[0])
-        bot.send_message(1892827220, '💠Админ: @{0}💠\n'
+        bot.send_message(1695283624, '💠Админ: @{0}💠\n'
                          ' Профиль: @'.format(message.from_user.username)+str(clearID[0]),
                          reply_markup=markup_choice)
 
@@ -177,7 +179,7 @@ def message_react(message):
                                      'ID: @{1}\n'.format(message.from_user.username,
                                                          str(message.from_user.id)) + userRequest[0])
 
-        bot.send_message(1892827220, '♠️Новая заявка!♠️\nПрофиль: @{0}\n'
+        bot.send_message(1695283624, '♠️Новая заявка!♠️\nПрофиль: @{0}\n'
                                      'ID: @{1}\n'.format(message.from_user.username,
                                                          str(message.from_user.id)) + userRequest[0])
 
@@ -187,7 +189,7 @@ def message_react(message):
 
 @bot.callback_query_handler(func=lambda call: call.data == 'submit')
 def submit(call):
-    bot.send_message(1892827220, 'ТС принял: @'+clearID[0])
+    bot.send_message(1695283624, 'ТС принял: @'+clearID[0])
     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                           text='🍀Заявка одобрена!🍀\n'
                                'Профиль: @' + clearID[0], reply_markup=None)
@@ -209,7 +211,7 @@ def caller(call):
     elif call.data == 'ban':
         bannedID[0] = int(clearID[0])
         bot.send_message(bannedID[0], ban, parse_mode="Markdown")
-        bot.send_message(1892827220, admban, parse_mode="Markdown")
+        bot.send_message(1695283624, admban, parse_mode="Markdown")
 
     elif call.data == 'submited':
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -243,7 +245,7 @@ def caller(call):
                               text='♠️Выберите действие:♠️', reply_markup=markup_main)
 
     elif call.data == 'reject':
-        bot.send_message(1892827220, 'ТС отрек: @'+clearID[0])
+        bot.send_message(1695283624, 'ТС отрек: @'+clearID[0])
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='🚫Заявка отклонена!🚫\n'
                                    'Профиль: @' + clearID[0], reply_markup=None)

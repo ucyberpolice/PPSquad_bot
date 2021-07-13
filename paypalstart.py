@@ -160,7 +160,7 @@ def persona(message):
 def persona(message):
     count = 0
     if message.from_user.id in admin_id:
-        with io.open('members_file.txt', encoding='utf-8') as file:
+        with io.open('../../../Desktop/PayPalSquadBot/members_file.txt', encoding='utf-8') as file:
             try:
                 for line in file:
                     bot.send_message(line, text=orig_text[0])
@@ -176,30 +176,23 @@ def persona(message):
 
 @bot.message_handler(regexp='@')
 def persona(message):
-    if message.from_user.id == 1695283624:
+    if message.from_user.id in admin_id:
         chatID[0] = message.text
-        clearID[0] = (chatID[0]).replace('@','')
+        clearID[0] = (chatID[0]).replace('@', '')
         print(clearID[0])
-        bot.send_message(1695283624, '💠Админ: @{0}💠\n'
-                         ' Профиль: @'.format(message.from_user.username)+str(clearID[0]),
+        del_msg21 = bot.send_message(message.chat.id, '💠Админ: @{0}💠\n'
+                                     ' Профиль: @'.format(message.from_user.username) + str(clearID[0]),
                          reply_markup=markup_choice)
-
-    elif message.from_user.id == 999503141:
-        chatID[0] = message.text
-        clearID[0] = (chatID[0]).replace('@','')
-        print(clearID[0])
-        bot.send_message(999503141, '💠Админ: @{0}💠\n'
-                         ' Профиль: @'.format(message.from_user.username)+str(clearID[0]),
-                         reply_markup=markup_choice)
+        del_msg2[0] = del_msg21
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    members_file = open("members_file.txt", "a+")
+    members_file = open("../../../Desktop/PayPalSquadBot/members_file.txt", "a+")
     new_id = str(message.from_user.id)
     founded = True
 
-    with io.open('members_file.txt', encoding='utf-8') as file:
+    with io.open('../../../Desktop/PayPalSquadBot/members_file.txt', encoding='utf-8') as file:
         for line in file:
             if new_id in line:
                 founded = False
@@ -225,11 +218,11 @@ def start(message):
 
 @bot.message_handler(func=lambda message: True)
 def message_react(message):
-    members_file = open("members_file.txt", "a+")
+    members_file = open("../../../Desktop/PayPalSquadBot/members_file.txt", "a+")
     new_id = str(message.from_user.id)
     founded = True
 
-    with io.open('members_file.txt', encoding='utf-8') as file:
+    with io.open('../../../Desktop/PayPalSquadBot/members_file.txt', encoding='utf-8') as file:
         for line in file:
             if new_id in line:
                 founded = False
@@ -247,9 +240,9 @@ def message_react(message):
 
     elif userStatus[0] == 1:
         userRequest[0] = message.text
-        #bot.send_message(999503141, '🐹Новая заявка!🐹\n👁Профиль: @{0}\n'
-                                    # '💷Id: @{1}\n'.format(message.from_user.username,
-                                                      #   str(message.from_user.id)) + userRequest[0])
+        bot.send_message(999503141, '🐹Новая заявка!🐹\n👁Профиль: @{0}\n'
+                                    '💷Id: @{1}\n'.format(message.from_user.username,
+                                                        str(message.from_user.id)) + userRequest[0])
 
         bot.send_message(1695283624, '🐹Новая заявка!🐹\n👁Профиль: @{0}\n'
                                      '💷Id: @{1}\n'.format(message.from_user.username,
@@ -262,14 +255,13 @@ def message_react(message):
 
 @bot.callback_query_handler(func=lambda call: call.data == 'submit')
 def submit(call):
-    members_file = open("members_file.txt", "a+")
+    members_file = open("../../../Desktop/PayPalSquadBot/members_file.txt", "a+")
     members_file.write("\n" + str(clearID[0]))
     members_file.close()
 
     bot.send_message(1695283624, 'ТС принял: @'+clearID[0])
-    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                          text='🍀Заявка одобрена!🍀\n'
-                               'Профиль: @' + clearID[0], reply_markup=None)
+
+    bot.delete_message(chat_id=call.message.chat.id, message_id=del_msg2[0])
 
     bot.send_sticker(clearID[0], 'CAACAgIAAxkBAAECkkJg7Zg5uXg6O2OS_C_OrxROvZx0KAACdQ8AAr0nEUoDQnRWf0YLYSAE')
     time.sleep(0.5)
@@ -324,9 +316,7 @@ def caller(call):
 
     elif call.data == 'reject':
         bot.send_message(1695283624, 'ТС отрек: @'+clearID[0])
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text='🚫Заявка отклонена!🚫\n'
-                                   'Профиль: @' + clearID[0], reply_markup=None)
+        bot.delete_message(chat_id=call.message.chat.id, message_id=del_msg2[0])
         bot.send_sticker(clearID[0], 'CAACAgIAAxkBAAECkj5g7Zfv76aC1XHirWy-5CnvgJdObgAC0QwAAqL7YUoHET8XRM4bwiAE')
         time.sleep(0.6)
         bot.send_message(clearID[0], no, parse_mode="Markdown")
